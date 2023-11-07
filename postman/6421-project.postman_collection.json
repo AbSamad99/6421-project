@@ -1,0 +1,750 @@
+{
+	"info": {
+		"_postman_id": "ca4ed973-8f3b-4d68-857d-002c63a1584f",
+		"name": "6421-project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8653947"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"item": [
+				{
+					"name": "Signup - All details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 1: Successful Signup\r",
+									"pm.test(\"Status code is 201 Created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'User created'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User created\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"johndoe@example.com\",\r\n  \"password\": \"strongPassword\",\r\n  \"dateOfBirth\": \"1990-01-01\",\r\n  \"address\": \"123 Main St\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/signup",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - User Already Exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 3: Invalid Request - User Already Exists\r",
+									"pm.test(\"Status code is 400 Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Invalid request'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"johndoe@example.com\",\r\n  \"password\": \"strongPassword\",\r\n  \"dateOfBirth\": \"1990-01-01\",\r\n  \"address\": \"123 Main St\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/signup",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Missing Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 2: Invalid Request - Missing Fields\r",
+									"pm.test(\"Status code is 400 Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Invalid request'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Alice\",\r\n  \"lastName\": \"Smith\",\r\n  \"email\": \"alicesmith@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/signup",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Signin",
+			"item": [
+				{
+					"name": "Signin - All details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 1: Successful Sign-in\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains JWT token\", function () {\r",
+									"    pm.expect(pm.response.text()).to.have.string(\"token\");\r",
+									"});\r",
+									"\r",
+									"// Extract the token from the response body\r",
+									"var jsonData = pm.response.json();\r",
+									"var token = jsonData.token;\r",
+									"\r",
+									"// Save the token as an environment variable\r",
+									"pm.environment.set(\"authenticationToken\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"johndoe@example.com\",\r\n  \"password\": \"strongPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/signin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin - Invalid Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 3: Invalid Email\r",
+									"pm.test(\"Status code is 400 Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Invalid request'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"johndoe@example1.com\",\r\n  \"password\": \"strongPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/signin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin - Invalid Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 4: Invalid Password\r",
+									"pm.test(\"Status code is 400 Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Invalid password'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid password\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"johndoe@example.com\",\r\n  \"password\": \"strongPassword1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/signin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin - Missing Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 2: Invalid Request - Missing Fields\r",
+									"pm.test(\"Status code is 400 Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Invalid request'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"johndoe@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/signin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update Password",
+			"item": [
+				{
+					"name": "Update Password - All Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 1: Successful Password Update\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Password updated successfully'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Password updated successfully\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authenticationToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currentPassword\": \"strongPassword\",\r\n  \"newPassword\": \"newStrongPassword\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/updatePassword",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password - Invalid Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 4: Invalid Current Password\r",
+									"pm.test(\"Status code is 400 Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Invalid request'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authenticationToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currentPassword\": \"strongPassword\",\r\n  \"newPassword\": \"newStrongPassword\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/updatePassword",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password - Invalid Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 3: Unauthorized Request - Invalid Token\r",
+									"pm.test(\"Status code is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Unauthorized'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Unauthorized\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currentPassword\": \"strongPassword\",\r\n  \"newPassword\": \"newStrongPassword\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/updatePassword",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password - Missing Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 5: Unauthorized Request - Missing Token\r",
+									"pm.test(\"Status code is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Unauthorized'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Unauthorized\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currentPassword\": \"strongPassword\",\r\n  \"newPassword\": \"newStrongPassword\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/updatePassword",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password - Missing Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 2: Invalid Request - Missing Fields\r",
+									"pm.test(\"Status code is 400 Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Invalid request'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid request\");\r",
+									"});\r",
+									"    "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authenticationToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"newPassword\": \"newStrongPassword\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/updatePassword",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Protected Route",
+			"item": [
+				{
+					"name": "Protected Route - Valid Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 1: Successful Access with Valid JWT\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'This is protected data'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"This is protected data\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authenticationToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/protectedRoute",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"protectedRoute"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Protected Route - Invalid Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 3: Unauthorized Access - Invalid Token\r",
+									"pm.test(\"Status code is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Unauthorized'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Unauthorized\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/protectedRoute",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"protectedRoute"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Protected Route - Missing Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test Case 2: Unauthorized Access - Missing Token\r",
+									"pm.test(\"Status code is 401 Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Unauthorized'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Unauthorized\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/protectedRoute",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"protectedRoute"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
